@@ -21,16 +21,21 @@ repositories {
 }
 
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.17.1-R0.1-SNAPSHOT")
-    compileOnly("org.jetbrains.kotlin:kotlin-stdlib:1.6.0")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib:1.6.0")
+    compileOnly("io.papermc.paper:paper-api:1.18.1-R0.1-SNAPSHOT")
 }
 
 bukkit {
     main = "$group.${rootProject.name}.Main"
-    apiVersion = "1.17"
+    apiVersion = "1.18"
     load = BukkitPluginDescription.PluginLoadOrder.STARTUP
     authors = listOf("ddPn08")
     defaultPermission = BukkitPluginDescription.Permission.Default.OP
+    commands {
+        register("xmasbreaker"){
+            permission = "xmasbreaker.command.xmasbreaker"
+        }
+    }
 }
 
 tasks {
@@ -42,7 +47,7 @@ tasks {
     }
     register<Copy>("devBuild"){
         dependsOn("clean", "shadowJar")
-        from("$buildDir/libs/${rootProject.name}-$version.jar")
+        from("$buildDir/libs/${rootProject.name}-${rootProject.version}.jar")
         into("$projectDir/.debug/plugins")
     }
 }
